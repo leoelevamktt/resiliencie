@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound() { return <section className="page-hero page-hero--minimal not-found"><div className="shell"><span className="eyebrow">PÁGINA NÃO ENCONTRADA</span><h1>Vamos encontrar <em>outro caminho?</em></h1><p>O endereço que você acessou não está disponível.</p><Link className="button button--green" href="/">Voltar à página inicial</Link></div></section>; }

@@ -1,0 +1,14 @@
+import Link from 'next/link';
+import { ArrowUpRight, BookOpenText, FileText } from 'lucide-react';
+import { scientificArticles, publicArticles } from '@/data/editorial';
+export const metadata = { title: 'Artigos e conteúdos', description: 'Produção científica e textos para o público sobre saúde mental, desenvolvimento humano e trabalho.' };
+function EditorialItems({ items, kind }) {
+  if (!items.length) return <div className="editorial-empty"><span>EM PREPARAÇÃO</span><p>Estamos organizando as publicações desta seção. Em breve, você poderá encontrar novos materiais aqui.</p></div>;
+  return <div className="editorial-list">{items.map((item,i)=><article className="editorial-item" key={item.slug || item.title}><span className="editorial-item__number">{String(i+1).padStart(2,'0')}</span><div><span className="eyebrow">{item.date || (kind === 'scientific' ? 'PRODUÇÃO CIENTÍFICA' : 'TEXTO AUTORAL')}</span><h3>{item.title}</h3><p>{item.summary}</p>{kind==='scientific' && item.reference && <small className="editorial-item__reference">{item.reference}</small>}</div>{item.url && <a href={item.url} target="_blank" rel="noopener noreferrer" className="editorial-item__link">Leia a publicação <ArrowUpRight size={18}/></a>}</article>)}</div>;
+}
+export default function ContentPage() { return <>
+  <section className="page-hero page-hero--minimal"><div className="shell"><span className="eyebrow">CONHECIMENTO PARA COMPARTILHAR</span><h1>Reflexões, ciência e <em>novas perspectivas.</em></h1><p>Um espaço para reunir produções científicas e conteúdos autorais sobre saúde mental, desenvolvimento humano e trabalho.</p></div></section>
+  <section className="section"><div className="shell editorial-section"><div className="editorial-section__intro"><FileText size={32} strokeWidth={1.25}/><span className="eyebrow">01 / CONTEÚDOS</span><h2>Produção <em>científica.</em></h2><p>Resumos e referências de artigos científicos, com links para consultar as publicações originais.</p></div><EditorialItems items={scientificArticles} kind="scientific" /></div></section>
+  <section className="section section--sand"><div className="shell editorial-section"><div className="editorial-section__intro"><BookOpenText size={32} strokeWidth={1.25}/><span className="eyebrow">02 / CONTEÚDOS</span><h2>Conteúdos para <em>você.</em></h2><p>Textos autorais sobre saúde mental, desenvolvimento e relações com o trabalho, preparados para compartilhar conhecimento de forma acessível.</p></div><EditorialItems items={publicArticles} kind="public" /></div></section>
+  <section className="section editorial-bottom"><div className="shell"><h2>Quer conversar sobre <em>algum tema?</em></h2><Link href="/contato?tipo=outros" className="button button--outline">Entre em contato <ArrowUpRight size={18}/></Link></div></section>
+</>; }
